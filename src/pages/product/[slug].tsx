@@ -4,6 +4,7 @@ import { useQuery } from "urql";
 import { GET_PRODUCT_DETAILS_QUERY } from "../../lib/query";
 import { Product } from "../../types/product";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
+import { DefaultLayout } from "../../components/DefaultLayout";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -23,43 +24,40 @@ const ProductDetails = () => {
   const productImage = product?.image.data.attributes.formats;
 
   return (
-    <>
-      <Head>
-        <title>Styled | {product.title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <DefaultLayout title={`Styled. | ${product?.title}`}>
+      <div>
+        {fetching && <p>Loading...</p>}
 
-      {fetching && <p>Loading...</p>}
+        {!fetching && product && (
+          <div className="flex flex-col sm:flex-row sm:justify-between">
+            <img
+              src={productImage.medium.url}
+              alt={product.title}
+              className="w-full sm:w-2/5"
+            />
+            <div className="flex flex-col gap-10 w-full sm:w-2/5">
+              <h2 className="font-medium capitalize">{product.title}</h2>
+              <p>{product.description}</p>
 
-      {!fetching && product && (
-        <div className="max-w-container min-w-xs mx-auto flex flex-col sm:flex-row sm:justify-between mt-20">
-          <img
-            src={productImage.medium.url}
-            alt={product.title}
-            className="w-full sm:w-2/5"
-          />
-          <div className="flex flex-col gap-10 w-full sm:w-2/5">
-            <h2 className="font-medium">{product.title}</h2>
-            <p>{product.description}</p>
+              <div className="flex items-center mx-4">
+                <span className="text-secondary">Qtt</span>
+                <button className="text-primary hover:text-secondary duration-300 bg-transparent px-4 py-2">
+                  <AiFillPlusCircle />
+                </button>
+                <p className="text-center">0</p>
+                <button className="text-primary hover:text-secondary duration-300 bg-transparent px-4 py-2">
+                  <AiFillMinusCircle />
+                </button>
+              </div>
 
-            <div className="flex items-center mx-4">
-              <span className="text-secondary">Qtt</span>
-              <button className="text-primary hover:text-secondary duration-300 bg-transparent px-4 py-2">
-                <AiFillPlusCircle />
-              </button>
-              <p className="text-center">0</p>
-              <button className="text-primary hover:text-secondary duration-300 bg-transparent px-4 py-2">
-                <AiFillMinusCircle />
+              <button className="w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border">
+                add to cart
               </button>
             </div>
-
-            <button className="w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border">
-              add to cart
-            </button>
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </DefaultLayout>
   );
 };
 

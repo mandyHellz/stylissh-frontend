@@ -7,6 +7,7 @@ import { PRODUCT_QUERY } from "../lib/query";
 import { ProductCard } from "../components/ProductCard";
 
 import { Product } from "../types/product";
+import { DefaultLayout } from "../components/DefaultLayout";
 
 const Home: NextPage = () => {
   const [results] = useQuery({ query: PRODUCT_QUERY });
@@ -19,30 +20,29 @@ const Home: NextPage = () => {
   const productsList: Product[] = data?.products?.data;
 
   return (
-    <div className="max-w-container min-w-xs mx-auto">
-      <Head>
-        <title>Styled | Home</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <DefaultLayout title={`Styled`}>
+      <div>
+        {fetching && <p>Loading...</p>}
 
-      {fetching && <p>Loading...</p>}
+        <div className="gallery gap-8">
+          {productsList?.map((product: Product) => {
+            const productInfo = product.attributes;
+            const productImage =
+              product.attributes.image.data.attributes.formats;
 
-      <div className="gallery gap-8">
-        {productsList?.map((product: Product) => {
-          const productInfo = product.attributes;
-          const productImage = product.attributes.image.data.attributes.formats;
-
-          return (
-            <ProductCard
-              key={product.id}
-              title={productInfo.title}
-              price={productInfo.price}
-              image={productImage.small.url}
-            />
-          );
-        })}
+            return (
+              <ProductCard
+                key={product.id}
+                title={productInfo.title}
+                price={productInfo.price}
+                slug={productInfo.slug}
+                image={productImage.small.url}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </DefaultLayout>
   );
 };
 
