@@ -19,8 +19,8 @@ export const ProductCard = ({ title, image, price, slug }: ProductProps) => {
           />
         </div>
       </Link>
-      <h2 className="py-1 font-medium">{title}</h2>
-      <h3>{price}</h3>
+      <h2 className="py-1 font-medium text-primary">{title}</h2>
+      <h3 className="text-secondary">{price}</h3>
     </div>
   );
 };
