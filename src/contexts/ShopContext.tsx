@@ -6,6 +6,8 @@ interface ShopContextProps {
   increaseProductQuantity: () => void;
   decreaseProductQuantity: () => void;
   cartItems: cartItemProps[];
+  totalCartItems: number;
+  totalCartPrice: number;
   addItemToCart: (data: cartItemProps) => void;
   removeItemFromCart: (data: cartItemProps) => void;
   showCart: boolean;
@@ -23,6 +25,8 @@ export const ShopContext = createContext<ShopContextProps>({
   decreaseProductQuantity: undefined,
 
   cartItems: undefined,
+  totalCartItems: undefined,
+  totalCartPrice: undefined,
   addItemToCart: undefined,
   removeItemFromCart: undefined,
 
@@ -42,8 +46,10 @@ export const ShopProvider = ({ children }) => {
   };
 
   const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
+  const [totalCartItems, setTotalCartItems] = useState<number>(0);
+  const [totalCartPrice, setTotalCartPrice] = useState<number>(0);
 
-  const addItemToCart = (data: { product; quantity }) => {
+  const addItemToCart = (data: cartItemProps) => {
     const isProductOnCart = cartItems.find(
       (cartItem) =>
         cartItem.product.attributes.slug === data.product.attributes.slug
@@ -63,9 +69,18 @@ export const ShopProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, data]);
     }
+
+    setTotalCartItems(
+      (prevTotalCartItems) => prevTotalCartItems + data.quantity
+    );
+
+    setTotalCartPrice(
+      (prevTotalCartPrice) =>
+        prevTotalCartPrice + data.product.attributes.price * data.quantity
+    );
   };
 
-  const removeItemFromCart = (data: { product; quantity }) => {
+  const removeItemFromCart = (data: cartItemProps) => {
     const isProductOnCart = cartItems.find(
       (cartItem) =>
         cartItem.product.attributes.slug === data.product.attributes.slug
@@ -87,6 +102,12 @@ export const ShopProvider = ({ children }) => {
         )
       );
     }
+
+    setTotalCartItems((prevTotalCartItems) => prevTotalCartItems - 1);
+
+    setTotalCartPrice(
+      (prevTotalCartPrice) => prevTotalCartPrice - data.product.attributes.price
+    );
   };
 
   const [showCart, setShowCart] = useState<boolean>(false);
@@ -102,6 +123,8 @@ export const ShopProvider = ({ children }) => {
         increaseProductQuantity,
         decreaseProductQuantity,
         cartItems,
+        totalCartItems,
+        totalCartPrice,
         addItemToCart,
         removeItemFromCart,
         showCart,
