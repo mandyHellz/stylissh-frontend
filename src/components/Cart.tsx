@@ -3,8 +3,13 @@ import { FaShoppingCart } from "react-icons/fa";
 import { QuantitySelector } from "./QuantitySelector";
 
 export const Cart = () => {
-  const { cartItems, showCartHandler, addItemToCart, removeItemFromCart } =
-    useShopContext();
+  const {
+    cartItems,
+    showCartHandler,
+    addItemToCart,
+    removeItemFromCart,
+    totalCartPrice,
+  } = useShopContext();
 
   return (
     <div
@@ -12,7 +17,7 @@ export const Cart = () => {
       onClick={() => showCartHandler(false)}
     >
       <div
-        className="w-full h-full md:w-1/2 xl:w-2/5 bg-secondary-300 py-8 px-16 lg:px-20 relative"
+        className="no-scrollbar w-full h-full md:w-1/2 xl:w-2/5 bg-secondary-300 py-8 px-16 lg:px-20 relative overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {cartItems.length <= 0 && (
@@ -41,7 +46,7 @@ export const Cart = () => {
                     <h3 className="font-medium">
                       {item.product.attributes.title}
                     </h3>
-                    <h3>{item.product.attributes.price}</h3>
+                    <h3>${item.product.attributes.price}</h3>
                   </div>
                   <QuantitySelector
                     minusButtonHandler={() => removeItemFromCart(item)}
@@ -55,6 +60,14 @@ export const Cart = () => {
               </div>
             );
           })}
+        {cartItems.length > 0 && (
+          <div>
+            <h3>Subtotal: ${totalCartPrice}</h3>
+            <button className="mt-8 w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border">
+              Checkout
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
