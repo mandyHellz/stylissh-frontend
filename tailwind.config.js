@@ -21,6 +21,11 @@ module.exports = {
         98: '24.5rem',
         100: '25rem',
       },
+      fontSize: {
+        xxs: ['12px', {
+          lineHeight: '0.8rem',
+        }]
+      },
       colors: {
         primary: {
           DEFAULT: '#2d2d2d',
