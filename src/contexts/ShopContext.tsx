@@ -6,7 +6,10 @@ interface ShopContextProps {
   increaseProductQuantity: () => void;
   decreaseProductQuantity: () => void;
   cartItems: cartItemProps[];
-  onAddToCart: (data) => void;
+  addItemToCart: (data: cartItemProps) => void;
+  removeItemFromCart: (data: cartItemProps) => void;
+  showCart: boolean;
+  showCartHandler: (action: boolean) => void;
 }
 
 interface cartItemProps {
@@ -20,7 +23,11 @@ export const ShopContext = createContext<ShopContextProps>({
   decreaseProductQuantity: undefined,
 
   cartItems: undefined,
-  onAddToCart: undefined,
+  addItemToCart: undefined,
+  removeItemFromCart: undefined,
+
+  showCart: undefined,
+  showCartHandler: undefined,
 });
 
 export const ShopProvider = ({ children }) => {
@@ -36,17 +43,20 @@ export const ShopProvider = ({ children }) => {
 
   const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
 
-  const onAddToCart = (data: { product; quantity }) => {
-    const itExists = cartItems.find(
+  const addItemToCart = (data: { product; quantity }) => {
+    const isProductOnCart = cartItems.find(
       (cartItem) =>
         cartItem.product.attributes.slug === data.product.attributes.slug
     );
 
-    if (itExists) {
+    if (isProductOnCart) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.product.attributes.slug === data.product.attributes.slug
-            ? { ...itExists, quantity: itExists.quantity + data.quantity }
+            ? {
+                ...isProductOnCart,
+                quantity: isProductOnCart.quantity + data.quantity,
+              }
             : cartItem
         )
       );
@@ -55,9 +65,35 @@ export const ShopProvider = ({ children }) => {
     }
   };
 
-  console.log(cartItems);
+  const removeItemFromCart = (data: { product; quantity }) => {
+    const isProductOnCart = cartItems.find(
+      (cartItem) =>
+        cartItem.product.attributes.slug === data.product.attributes.slug
+    );
 
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+    if (isProductOnCart.quantity === 1) {
+      setCartItems(
+        cartItems.filter(
+          (cartItem) =>
+            cartItem.product.attributes.slug !== data.product.attributes.slug
+        )
+      );
+    } else {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.product.attributes.slug === data.product.attributes.slug
+            ? { ...isProductOnCart, quantity: isProductOnCart.quantity - 1 }
+            : cartItem
+        )
+      );
+    }
+  };
+
+  const [showCart, setShowCart] = useState<boolean>(false);
+
+  const showCartHandler = (action) => {
+    setShowCart(action);
+  };
 
   return (
     <ShopContext.Provider
@@ -66,7 +102,10 @@ export const ShopProvider = ({ children }) => {
         increaseProductQuantity,
         decreaseProductQuantity,
         cartItems,
-        onAddToCart,
+        addItemToCart,
+        removeItemFromCart,
+        showCart,
+        showCartHandler,
       }}
     >
       {children}
