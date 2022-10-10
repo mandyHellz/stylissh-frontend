@@ -57,12 +57,14 @@ export const Cart = () => {
           variants={cards}
           initial="hidden"
           animate="show"
+          layout
           className="no-scrollbar h-full py-8 px-16 lg:px-20 relative overflow-y-scroll"
           onClick={(e) => e.stopPropagation()}
         >
           {cartItems.length <= 0 && (
             <motion.div
               variants={card}
+              layout
               className="w-4/5 h-full absolute -top-8 -translate-x-1/2 flex flex-col items-center justify-center gap-4"
             >
               <h1 className="font-medium">You have more shopping to do 😉</h1>
@@ -70,46 +72,45 @@ export const Cart = () => {
             </motion.div>
           )}
 
-          <motion.div>
-            {cartItems.length > 0 &&
-              cartItems.map((item) => {
-                return (
-                  <motion.div
-                    variants={card}
-                    key={item.product.id}
-                    className="flex items-center justify-between gap-2 rounded-sm overflow-hidden bg-white p-8 my-8"
-                  >
-                    <img
-                      src={
-                        item.product.attributes.image.data.attributes.formats
-                          .thumbnail.url
+          {cartItems.length > 0 &&
+            cartItems.map((item) => {
+              return (
+                <motion.div
+                  variants={card}
+                  layout
+                  key={item.product.id}
+                  className="flex items-center justify-between gap-2 rounded-sm overflow-hidden bg-white p-8 my-8"
+                >
+                  <img
+                    src={
+                      item.product.attributes.image.data.attributes.formats
+                        .thumbnail.url
+                    }
+                    alt={item.product.attributes.title}
+                    className="w-24 h-24 object-cover"
+                  />
+                  <div className="w-1/2 flex flex-col h-24 justify-around text-base">
+                    <div className="text-secondary">
+                      <h3 className="font-medium">
+                        {item.product.attributes.title}
+                      </h3>
+                      <h3>${item.product.attributes.price}</h3>
+                    </div>
+                    <QuantitySelector
+                      minusButtonHandler={() => removeItemFromCart(item)}
+                      plusButtonHandler={() =>
+                        addItemToCart({ product: item.product, quantity: 1 })
                       }
-                      alt={item.product.attributes.title}
-                      className="w-24 h-24 object-cover"
+                      quantity={item.quantity}
+                      className="text-sm"
                     />
-                    <motion.div className="flex flex-col h-24 justify-around text-base">
-                      <div className="text-secondary">
-                        <h3 className="font-medium">
-                          {item.product.attributes.title}
-                        </h3>
-                        <h3>${item.product.attributes.price}</h3>
-                      </div>
-                      <QuantitySelector
-                        minusButtonHandler={() => removeItemFromCart(item)}
-                        plusButtonHandler={() =>
-                          addItemToCart({ product: item.product, quantity: 1 })
-                        }
-                        quantity={item.quantity}
-                        className="text-sm"
-                      />
-                    </motion.div>
-                  </motion.div>
-                );
-              })}
-          </motion.div>
+                  </div>
+                </motion.div>
+              );
+            })}
 
           {cartItems.length > 0 && (
-            <motion.div>
+            <motion.div layout>
               <h3>Subtotal: ${totalCartPrice}</h3>
               <button className="my-8 w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border">
                 Checkout
