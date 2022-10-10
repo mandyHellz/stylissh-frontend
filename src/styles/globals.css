@@ -20,11 +20,19 @@ a {
   text-decoration: none;
 }
 
-p {
-  line-height: 150%;
-}
-
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
