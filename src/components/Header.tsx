@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { FiShoppingBag } from "react-icons/fi";
-import { useShopContext } from "../contexts/ShopContext";
 import { Cart } from "./Cart";
+import { useShopContext } from "../contexts/ShopContext";
+import { FiShoppingBag } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const Header = () => {
   const { showCart, showCartHandler, totalCartItems } = useShopContext();
@@ -17,14 +18,18 @@ export const Header = () => {
           onClick={() => showCartHandler(true)}
         >
           {totalCartItems > 0 && (
-            <div className="bg-red-500 w-5 h-5 flex items-center justify-center rounded-full absolute -top-1.5 -right-1.5">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="bg-red-500 w-5 h-5 flex items-center justify-center rounded-full absolute -top-1.5 -right-1.5"
+            >
               <span className="text-white text-xxs">{totalCartItems}</span>
-            </div>
+            </motion.div>
           )}
           <FiShoppingBag className="" size={25} />
         </div>
       </div>
-      {showCart && <Cart />}
+      <AnimatePresence>{showCart && <Cart />}</AnimatePresence>
     </div>
   );
 };
