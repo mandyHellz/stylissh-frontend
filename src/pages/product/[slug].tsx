@@ -30,7 +30,7 @@ const ProductDetails = () => {
   const productImage = product?.image.data.attributes.formats;
 
   return (
-    <DefaultLayout title={`Styled. | ${product?.title}`}>
+    <DefaultLayout title={`Stylissh. | ${product?.title}`}>
       <div>
         {fetching && <p>Loading...</p>}
 

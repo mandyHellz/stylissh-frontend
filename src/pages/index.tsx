@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   const productsList: Product[] = data?.products?.data;
 
   return (
-    <DefaultLayout title={`Styled`}>
+    <DefaultLayout title={`Stylissh.`}>
       <div>
         {fetching && <p>Loading...</p>}
 

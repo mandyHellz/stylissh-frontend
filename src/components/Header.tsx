@@ -11,7 +11,7 @@ export const Header = () => {
     <div className="w-full h-16">
       <div className="max-w-container mx-auto flex justify-between items-center h-16 px-10 z-10">
         <Link href={"/"}>
-          <p className="text-3xl cursor-pointer">Styled.</p>
+          <p className="text-3xl cursor-pointer">Stylissh.</p>
         </Link>
         <div
           className="relative cursor-pointer px-1"
