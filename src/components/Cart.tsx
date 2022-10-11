@@ -3,6 +3,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { QuantitySelector } from "./QuantitySelector";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { getStripeJs } from "../lib/getStripe";
+import axios from "axios";
 
 const card = {
   hidden: { opacity: 0, scale: 0.8 },
@@ -28,6 +30,19 @@ export const Cart = () => {
     removeItemFromCart,
     totalCartPrice,
   } = useShopContext();
+
+  const handleCheckoutButton = async () => {
+    try {
+      const stripePromise = await getStripeJs();
+      const response = await axios.post("/api/checkout", {
+        products: cartItems,
+      });
+      const data = await response.data;
+      await stripePromise.redirectToCheckout({ sessionId: data.id });
+    } catch (err) {
+      alert("Error in checkout redirect!");
+    }
+  };
 
   return (
     <motion.div
@@ -112,7 +127,10 @@ export const Cart = () => {
           {cartItems.length > 0 && (
             <motion.div layout>
               <h3>Subtotal: ${totalCartPrice}</h3>
-              <button className="my-8 w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border">
+              <button
+                onClick={handleCheckoutButton}
+                className="my-8 w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border"
+              >
                 Checkout
               </button>
             </motion.div>
