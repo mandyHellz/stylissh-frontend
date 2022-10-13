@@ -24,7 +24,7 @@ export default async function handler(
   const normalShipping = `${process.env.NORMAL_SHIPPING_RATE_ID}`;
 
   const user = session?.user;
-  const stripeId = user[process.env.STRIPE_CUSTOMER_ID];
+  const stripeId = user ? user[process.env.STRIPE_CUSTOMER_ID] : undefined;
 
   const checkoutSession = await stripe.checkout.sessions.create({
     cancel_url: cancelUrl,
