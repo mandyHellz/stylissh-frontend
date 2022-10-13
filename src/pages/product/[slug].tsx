@@ -7,12 +7,14 @@ import { DefaultLayout } from "../../components/DefaultLayout";
 import { useShopContext } from "../../contexts/ShopContext";
 import { QuantitySelector } from "../../components/QuantitySelector";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useEffect } from "react";
 
 const ProductDetails = () => {
   const {
     productQuantity,
     increaseProductQuantity,
     decreaseProductQuantity,
+    quantityHandler,
     addItemToCart,
   } = useShopContext();
   const router = useRouter();
@@ -36,6 +38,11 @@ const ProductDetails = () => {
       duration: 1500,
     });
   };
+
+  useEffect(() => {
+    quantityHandler(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <DefaultLayout title={`Stylissh. | ${product?.title}`}>
