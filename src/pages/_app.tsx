@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { Provider, createClient } from "urql";
 import { ShopProvider } from "../contexts/ShopContext";
 import { UserProvider } from "@auth0/nextjs-auth0";
+import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
 
 const client = createClient({ url: `${process.env.NEXT_PUBLIC_BACKEND_API}` });
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <UserProvider>
       <ShopProvider>
         <Provider value={client}>
+          <Toaster />
           <Component {...pageProps} />
         </Provider>
       </ShopProvider>
