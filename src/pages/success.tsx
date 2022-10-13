@@ -30,8 +30,6 @@ export default function Success({
 }: SuccessProps) {
   const router = useRouter();
 
-  console.log(products.map((product) => product.images));
-
   return (
     <DefaultLayout title={"Stylissh. | Thank u!"}>
       <motion.div
