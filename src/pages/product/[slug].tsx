@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useQuery } from "urql";
+import toast from "react-hot-toast";
 import { GET_PRODUCT_DETAILS_QUERY } from "../../lib/query";
 import { Product } from "../../types/product";
 import { DefaultLayout } from "../../components/DefaultLayout";
@@ -29,6 +30,12 @@ const ProductDetails = () => {
   const product = response?.attributes;
   const productImage = product?.image.data.attributes.formats;
 
+  const notify = () => {
+    toast.success(`${product.title} added to your cart.`, {
+      duration: 1500,
+    });
+  };
+
   return (
     <DefaultLayout title={`Stylissh. | ${product?.title}`}>
       <div>
@@ -54,12 +61,13 @@ const ProductDetails = () => {
               />
 
               <button
-                onClick={() =>
+                onClick={() => {
                   addItemToCart({
                     product: response,
                     quantity: productQuantity,
-                  })
-                }
+                  }),
+                    notify();
+                }}
                 className="w-full bg-primary hover:bg-secondary duration-300 text-white font-medium text-xs sm:text-sm px-4 py-2 border"
               >
                 add to cart
