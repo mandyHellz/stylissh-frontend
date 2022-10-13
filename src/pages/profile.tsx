@@ -23,7 +23,6 @@ interface ProfileProps {
 export default function Profile({ orders, userData }: ProfileProps) {
   const route = useRouter();
 
-  console.log(orders, userData);
   return (
     <DefaultLayout title={`Stylissh. | ${userData.name}`}>
       <>
