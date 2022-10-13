@@ -1,6 +1,4 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-
 import { useQuery } from "urql";
 import { PRODUCT_QUERY } from "../lib/query";
 
