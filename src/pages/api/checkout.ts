@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { stripe } from "../../lib/stripe";
+import { getSession } from "@auth0/nextjs-auth0";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { products } = req.body;
+  const session = getSession(req, res);
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed." });
@@ -17,13 +19,18 @@ export default async function handler(
 
   const successUrl = `${process.env.NEXT_URL}/success?&session_id={CHECKOUT_SESSION_ID}`;
   const cancelUrl = `${process.env.NEXT_URL}/`;
+
   const expressShipping = `${process.env.EXPRESS_SHIPPING_RATE_ID}`;
   const normalShipping = `${process.env.NORMAL_SHIPPING_RATE_ID}`;
+
+  const user = session?.user;
+  const stripeId = user[process.env.STRIPE_CUSTOMER_ID];
 
   const checkoutSession = await stripe.checkout.sessions.create({
     cancel_url: cancelUrl,
     success_url: successUrl,
     mode: "payment",
+    customer: stripeId,
     shipping_address_collection: {
       allowed_countries: ["US"],
     },
