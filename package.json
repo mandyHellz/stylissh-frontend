@@ -25,6 +25,7 @@
     "urql": "^3.0.3"
   },
   "devDependencies": {
+    "@types/http-cache-semantics": "^4.0.1",
     "@types/node": "18.8.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
