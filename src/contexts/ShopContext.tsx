@@ -5,6 +5,7 @@ interface ShopContextProps {
   productQuantity: number;
   increaseProductQuantity: () => void;
   decreaseProductQuantity: () => void;
+  quantityHandler: (quantity: number) => void;
   cartItems: cartItemProps[];
   totalCartItems: number;
   totalCartPrice: number;
@@ -23,6 +24,7 @@ export const ShopContext = createContext<ShopContextProps>({
   productQuantity: undefined,
   increaseProductQuantity: undefined,
   decreaseProductQuantity: undefined,
+  quantityHandler: undefined,
 
   cartItems: undefined,
   totalCartItems: undefined,
@@ -43,6 +45,10 @@ export const ShopProvider = ({ children }) => {
 
   const decreaseProductQuantity = () => {
     setProductQuantity((prevQtty) => (prevQtty > 1 ? prevQtty - 1 : prevQtty));
+  };
+
+  const quantityHandler = (quantity) => {
+    setProductQuantity(quantity);
   };
 
   const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
@@ -122,6 +128,7 @@ export const ShopProvider = ({ children }) => {
         productQuantity,
         increaseProductQuantity,
         decreaseProductQuantity,
+        quantityHandler,
         cartItems,
         totalCartItems,
         totalCartPrice,
