@@ -32,7 +32,7 @@ export default async function handler(
     mode: "payment",
     customer: stripeId,
     shipping_address_collection: {
-      allowed_countries: ["US"],
+      allowed_countries: ["US", "CA", "BR"],
     },
     shipping_options: [
       {
