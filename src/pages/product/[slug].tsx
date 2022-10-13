@@ -6,6 +6,7 @@ import { Product } from "../../types/product";
 import { DefaultLayout } from "../../components/DefaultLayout";
 import { useShopContext } from "../../contexts/ShopContext";
 import { QuantitySelector } from "../../components/QuantitySelector";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const ProductDetails = () => {
   const {
@@ -22,13 +23,13 @@ const ProductDetails = () => {
 
   const { data, fetching, error } = results;
 
-  if (error) {
-    return <p>Oh no... {error.message}</p>;
-  }
-
   const response: Product = data?.products?.data[0];
   const product = response?.attributes;
   const productImage = product?.image.data.attributes.formats;
+
+  if (error) {
+    toast.error(`Ohh no... ${error.message}`);
+  }
 
   const notify = () => {
     toast.success(`${product.title} added to your cart.`, {
@@ -39,7 +40,11 @@ const ProductDetails = () => {
   return (
     <DefaultLayout title={`Stylissh. | ${product?.title}`}>
       <div>
-        {fetching && <p>Loading...</p>}
+        {fetching && (
+          <div>
+            <AiOutlineLoading3Quarters size={25} />
+          </div>
+        )}
 
         {!fetching && product && (
           <div className="flex flex-col sm:flex-row sm:justify-between">
