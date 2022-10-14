@@ -10,8 +10,8 @@ export const Header = () => {
   const { showCart, showCartHandler, totalCartItems } = useShopContext();
 
   return (
-    <div className="w-full h-16">
-      <div className="max-w-container mx-auto flex justify-between items-center h-16 px-10 z-10">
+    <div className="w-full h-16 z-10 fixed bg-secondary-300">
+      <div className="max-w-container mx-auto flex justify-between items-center h-16 px-10">
         <Link href={"/"}>
           <p className="text-3xl cursor-pointer">Stylissh.</p>
         </Link>

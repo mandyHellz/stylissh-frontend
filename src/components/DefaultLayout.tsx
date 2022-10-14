@@ -10,7 +10,8 @@ export const DefaultLayout = ({ children, title }: DefaultLayoutProps) => {
   return (
     <>
       <Header />
-      <main className="py-20 px-10 mx-auto max-w-container min-w-xs">
+
+      <main className="pt-28 pb-20 px-10 mx-auto max-w-container min-w-xs">
         <Head>
           <title>{title}</title>
           <link rel="icon" href="/favicon.ico" />
