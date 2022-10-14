@@ -38,6 +38,8 @@ Full Stack e-commerce application with the following features:
 - Stripe for payment, invoicing, etc
 - Cloudinary
 
+* [Backend project available in this repository](https://github.com/mandyHellz/stylissh-backend)
+
 ### Front End 👩‍💻
 
 - Next.js
