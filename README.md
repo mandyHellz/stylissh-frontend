@@ -9,7 +9,7 @@ E-commerce project created during **_The Full Stack React Course_** by developed
 
 Full Stack e-commerce application with the following features:
 
-- User Authentication - including Google Signin:
+- User Authentication - including Google Signin: <br>
   ![User Authentication](./public/login_google.png)
 
 - Secure Payments - including Apple and Google Pay - and email invoicing with Stripe:
