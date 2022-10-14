@@ -43,7 +43,7 @@ export default async function handler(
       },
     ],
     allow_promotion_codes: true,
-    line_items: products.map((item) => {
+    line_items: products?.map((item) => {
       return {
         price_data: {
           currency: "usd",

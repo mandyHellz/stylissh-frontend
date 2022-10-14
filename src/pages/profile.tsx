@@ -24,7 +24,7 @@ export default function Profile({ orders, userData }: ProfileProps) {
   const route = useRouter();
 
   return (
-    <DefaultLayout title={`Stylissh. | ${userData.name}`}>
+    <DefaultLayout title={`Stylissh. | ${userData?.name}`}>
       <>
         {userData && (
           <div className="w-full mx-auto flex flex-col justify-evenly gap-6">
@@ -34,7 +34,7 @@ export default function Profile({ orders, userData }: ProfileProps) {
             </div>
 
             <div>
-              {orders.map((order) => (
+              {orders?.map((order) => (
                 <div
                   key={order.id}
                   className="bg-white px-4 py-6 gap-2 flex flex-col sm:flex-row sm:justify-between text-primary font-medium"
@@ -48,7 +48,7 @@ export default function Profile({ orders, userData }: ProfileProps) {
                   <div>
                     <p>Receipt Email:</p>
                     <span className="text-secondary font-normal">
-                      {userData.email}
+                      {userData?.email}
                     </span>
                   </div>
                   <div>
@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
       customer: stripeId,
     });
 
-    const orders = paymentIntents.data.map((order) => {
+    const orders = paymentIntents?.data?.map((order) => {
       return {
         id: order.id,
         amount: order.amount,

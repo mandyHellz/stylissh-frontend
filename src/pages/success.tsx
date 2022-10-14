@@ -50,22 +50,25 @@ export default function Success({
           </div>
 
           <div className="w-full flex flex-col sm:flex-row justify-center gap-8">
-            <div className="text-center">
-              <p className="font-medium">Address:</p>
-              <p className="text-sm">{address.line1}</p>
-              <p className="text-sm">{address.city}</p>
-              <p className="text-sm">
-                {address.state} | {address.country}
-              </p>
-            </div>
+            {address && (
+              <div className="text-center">
+                <p className="font-medium">Address:</p>
+                <p className="text-sm">{address.line1}</p>
+                <p className="text-sm">{address.city}</p>
+                <p className="text-sm">
+                  {address.state} | {address.country}
+                </p>
+              </div>
+            )}
 
             <div className="text-center">
               <p className="font-medium">Products:</p>
-              {products.map((product) => (
-                <p key={product.id} className="w-full truncate text-sm">
-                  {product.name}
-                </p>
-              ))}
+              {products &&
+                products?.map((product) => (
+                  <p key={product.id} className="w-full truncate text-sm">
+                    {product.name}
+                  </p>
+                ))}
             </div>
           </div>
 
@@ -103,11 +106,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     expand: ["line_items", "line_items.data.price.product"],
   });
 
-  const customerName = sessionOrder.customer_details.name;
-  const customerEmail = sessionOrder.customer_details.email;
-  const customerAddress = sessionOrder.customer_details.address;
-  const products = sessionOrder.line_items.data.map(
-    (product) => product.price.product as Stripe.Product
+  const customerName = sessionOrder?.customer_details.name;
+  const customerEmail = sessionOrder?.customer_details.email;
+  const customerAddress = sessionOrder?.customer_details.address;
+  const products = sessionOrder?.line_items.data?.map(
+    (product) => product?.price.product as Stripe.Product
   );
 
   return {

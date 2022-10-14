@@ -24,8 +24,8 @@ export const User = () => {
   return (
     <div onClick={() => router.push("/profile")}>
       <img
-        src={user.picture}
-        alt={user.nickname}
+        src={user?.picture}
+        alt={user?.nickname}
         className="w-[25px] h-[25px] rounded-full overflow-hidden"
       />
     </div>
