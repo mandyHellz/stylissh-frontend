@@ -26,7 +26,7 @@ export const User = () => {
       <img
         src={user?.picture}
         alt={user?.nickname}
-        className="w-[25px] h-[25px] rounded-full overflow-hidden"
+        className="w-[25px] h-[25px] rounded-full overflow-hidden cursor-pointer"
       />
     </div>
   );
